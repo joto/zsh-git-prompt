@@ -30,8 +30,13 @@ function git_single_remote() {
     test $lines -le 1
 }
 
+function git_no_remote() {
+    lines=$(git remote | wc -l)
+    test $lines = 0
+}
+
 function git_branch_is_pushed() {
-    git diff-tree --quiet origin/master master
+    git_no_remote || git diff-tree --quiet origin/master master
 }
 
 #-----------------------------------------------------------------------------
