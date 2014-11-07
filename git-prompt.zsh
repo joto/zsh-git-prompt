@@ -31,7 +31,7 @@ function git_single_remote() {
 }
 
 function git_branch_is_pushed() {
-    git status | head -2 | tail -1 | grep -v --quiet "Your branch is ahead of"
+    git diff-tree --quiet origin/master master
 }
 
 #-----------------------------------------------------------------------------
