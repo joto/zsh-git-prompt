@@ -20,3 +20,16 @@ and the git info in the prompt:
 
     PS1="%m %n %~%v > "
 
+## Information shown
+
+First the name of the currently checked out branch (most often `master`) is
+shown and then a set of (Unicode) characters for different states of the
+repository:
+
+* `*` There are uncommitted changes.
+* `?` There are files git doesn't know about.
+* `➚` There are commits that haven't been pushed yet.
+* `☰` There are stashed files.
+* `⌥` There are branches other than `master`.
+* `®` There are remote repositories other than `origin` configured.
+
