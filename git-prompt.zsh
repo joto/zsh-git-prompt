@@ -27,7 +27,7 @@ function git_no_branches() {
 
 function git_single_remote() {
     lines=$(git remote | wc -l)
-    test $lines = 1
+    test $lines -le 1
 }
 
 function git_branch_is_pushed() {
