@@ -36,7 +36,7 @@ function git_no_remote() {
 }
 
 function git_branch_is_pushed() {
-    git_no_remote || git diff-tree --quiet origin/master master
+    git_no_remote || git diff-tree --quiet origin/master heads/master
 }
 
 #-----------------------------------------------------------------------------
