@@ -1,42 +1,66 @@
 
 function git_current_branch() {
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || \
-    ref=$(git rev-parse --short HEAD 2> /dev/null) || return
-    echo ${ref#refs/heads/}
+    ingit=`git rev-parse --is-inside-work-tree 2>/dev/null`
+    if [ "$ingit" = "true" ]; then
+        ref=$(git symbolic-ref HEAD 2> /dev/null) || \
+        ref=$(git rev-parse --short HEAD 2> /dev/null) || return
+        echo ${ref#refs/heads/}
+    fi
 }
 
 function git_status_is_clean() {
-    lines=$(git status --porcelain | egrep -v '^\?\? ' | wc -l)
-    test $lines = 0
+    ingit=`git rev-parse --is-inside-work-tree 2>/dev/null`
+    if [ "$ingit" = "true" ]; then
+        lines=$(git status --porcelain | egrep -v '^\?\? ' | wc -l)
+        test $lines = 0
+    fi
 }
 
 function git_unknown_files() {
-    lines=$(git status --porcelain | egrep '^\?\? ' | wc -l)
-    test $lines = 0
+    ingit=`git rev-parse --is-inside-work-tree 2>/dev/null`
+    if [ "$ingit" = "true" ]; then
+        lines=$(git status --porcelain | egrep '^\?\? ' | wc -l)
+        test $lines = 0
+    fi
 }
 
 function git_stash_is_clean() {
-    lines=$(git stash list | wc -l)
-    test $lines = 0
+    ingit=`git rev-parse --is-inside-work-tree 2>/dev/null`
+    if [ "$ingit" = "true" ]; then
+        lines=$(git stash list | wc -l)
+        test $lines = 0
+    fi
 }
 
 function git_no_branches() {
-    lines=$(git branch | wc -l)
-    test $lines = 1
+    ingit=`git rev-parse --is-inside-work-tree 2>/dev/null`
+    if [ "$ingit" = "true" ]; then
+        lines=$(git branch | wc -l)
+        test $lines = 1
+    fi
 }
 
 function git_single_remote() {
-    lines=$(git remote | wc -l)
-    test $lines -le 1
+    ingit=`git rev-parse --is-inside-work-tree 2>/dev/null`
+    if [ "$ingit" = "true" ]; then
+        lines=$(git remote | wc -l)
+        test $lines -le 1
+    fi
 }
 
 function git_no_remote() {
-    lines=$(git remote | wc -l)
-    test $lines = 0
+    ingit=`git rev-parse --is-inside-work-tree 2>/dev/null`
+    if [ "$ingit" = "true" ]; then
+        lines=$(git remote | wc -l)
+        test $lines = 0
+    fi
 }
 
 function git_branch_is_pushed() {
-    git_no_remote || git diff-tree --quiet origin/master heads/master
+    ingit=`git rev-parse --is-inside-work-tree 2>/dev/null`
+    if [ "$ingit" = "true" ]; then
+        git_no_remote || git diff-tree --quiet origin/master heads/master
+    fi
 }
 
 #-----------------------------------------------------------------------------
