@@ -59,7 +59,9 @@ function git_no_remote() {
 function git_branch_is_pushed() {
     ingit=`git rev-parse --is-inside-work-tree 2>/dev/null`
     if [ "$ingit" = "true" ]; then
-        git_no_remote || git diff-tree --quiet origin/master heads/master
+        if git branch -r | grep "origin/master" >/dev/null 2>&1; then
+            git_no_remote || git diff-tree --quiet origin/master heads/master
+        fi
     fi
 }
 
