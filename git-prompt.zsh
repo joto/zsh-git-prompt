@@ -1,6 +1,6 @@
 
 function in_git_repos() {
-    git rev-parse --is-inside-work-tree >/dev/null 2>/dev/null
+    test "`git rev-parse --is-inside-work-tree 2>/dev/null`" = "true"
 }
 
 function git_current_branch() {
